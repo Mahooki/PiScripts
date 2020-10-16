@@ -8,6 +8,11 @@ cd $DIR
 filetype=".mkv"
 total=$(find . -name "*$filetype" | wc -l)
 
+if [ $total = 0 ]; then
+  printf "No mkv files to convert or delete, exiting." 
+  exit 0
+fi
+
 counter=1
 shopt -s globstar nullglob
 for fn in **/*$filetype; do
@@ -25,4 +30,5 @@ done
 for fn in **/*$filetype; do
   rm "$fn"
 done
-printf "\nRemoved all mkv files\n"
+printf "\nRemoved $total mkv files\n"
+exit 0
